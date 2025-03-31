@@ -1,3 +1,5 @@
+import argparse
+
 import cv2
 import numpy as np
 
@@ -35,6 +37,11 @@ def video_to_numpy(video_path):
 
 
 if __name__ == "__main__":
-    video_file = "your_video.mp4"
-    num_columns = 5
-    video_to_numpy(video_file, num_columns)
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-v", "--video", help="Path to your video")
+
+    args = parser.parse_args()
+    video_path = args.video
+
+    video_to_numpy(video_path)
