@@ -44,13 +44,11 @@ class Pipeline:
 
             model_info = detectors[model_name]
             dependencies = model_info.get("depend", [])
-            if isinstance(dependencies, str):
-                dependencies = [dependencies]
 
             for dep in dependencies:
                 add_model(dep)  # Рекурсивное добавление зависимостей
 
-            self.pipeline.append(model_info["detector"])
+            self.pipeline.append(model_info["detector"]())
             added.add(model_name)
 
         for model in models:

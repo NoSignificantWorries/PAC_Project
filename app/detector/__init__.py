@@ -7,11 +7,11 @@ from exampleDetector4 import exampleDetector4
 detectors = {
     "exampleDetector": {
         "detector": exampleDetector,
-        "depend": [exampleDetector2, exampleDetector3]
+        "depend": ["exampleDetector2", "exampleDetector3"]
     },
     "exampleDetector2": {
         "detector": exampleDetector2,
-        "depend": exampleDetector4
+        "depend": ["exampleDetector4"]
     },
     "exampleDetector3": {
         "detector": exampleDetector3
