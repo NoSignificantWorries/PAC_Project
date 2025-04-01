@@ -1,8 +1,12 @@
 import argparse
 
-MODELS = {"a1": None, "a2": None, "b1": None}
+from app.detector import detectors
 
-class Parser:
+
+class ArgParser:
+    """
+    command line argument parsing
+    """
     def __init__(self):
         parser_obj = argparse.ArgumentParser()
 
@@ -11,9 +15,8 @@ class Parser:
         parser_obj.add_argument("-m", "--models", help="Models to predict")
 
         self.args = parser_obj.parse_args()
-
-    
-    def parse(self):
+        
+    def parse_args(self) -> dict:
         video_path = self.args.input
         output_path = self.args.output
         models = self.args.models
@@ -25,12 +28,14 @@ class Parser:
         
         models_res = []
         if models is None:
-            models_res = MODELS.keys()
+            models_res = detectors.keys()
         else:
             for model_name in models.split(","):
-                if model_name not in MODELS.keys():
+                if model_name not in detectors.keys():
                     print("WARN: Unknown model name:", model_name)
                 else:
                     models_res.append(model_name)
 
         return {"input": video_path, "output": output_path, "models": models_res}
+
+    ...
