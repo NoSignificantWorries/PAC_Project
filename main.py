@@ -3,6 +3,8 @@ import argparse
 import cv2
 import numpy as np
 
+import parser
+
 def video_to_numpy(video_path):
     cap = cv2.VideoCapture(video_path)
 
@@ -37,11 +39,8 @@ def video_to_numpy(video_path):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser_obj = parser.Parser()
 
-    parser.add_argument("-v", "--video", help="Path to your video")
+    print(parser_obj.parse())
 
-    args = parser.parse_args()
-    video_path = args.video
-
-    video_to_numpy(video_path)
+    # video_to_numpy(video_path)
