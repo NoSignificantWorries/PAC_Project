@@ -13,11 +13,13 @@ class Video:
         self.path_in = path_in
         self.path_out = path_out
         self.cap = cv2.VideoCapture(path_in)
-        self.buffer_size = 250
-        self.frame_buffer = np.array([None] * self.buffer_size, dtype=object)
-        self.buffer_i = 0
+
         if not self.cap.isOpened():
             raise ValueError(f"Cannot open video file: {path_in}")
+
+        self.buffer_size = 250
+        self.clustre_size = 5
+        self.frame_buffer = np.array([[None] * self.clustre_size] * self.buffer_size, dtype=object)
 
         self.fourcc = cv2.VideoWriter_fourcc(*'XVID')
         self.fps = int(self.cap.get(cv2.CAP_PROP_FPS))
@@ -38,8 +40,8 @@ class Video:
             self.close()
             raise StopIteration
 
-        self.frame_buffer[self.buffer_i] = frame
-        self.buffer_i = (self.buffer_i + 1) % self.buffer_size
+        self.frame_buffer[1:] = self.frame_buffer[:-1]
+        self.frame_buffer[0][0] = frame
         return frame
 
     def __len__(self):
@@ -51,8 +53,7 @@ class Video:
         return self.frame_buffer[index]
     
     def clear_buffer(self):
-        self.frame_buffer[:] = None
-        self.buffer_i = 0
+        self.frame_buffer[:, :] = None
 
     def write(self, frame):
         self.out.write(frame)
