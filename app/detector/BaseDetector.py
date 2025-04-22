@@ -1,5 +1,3 @@
-from app.detector import detectors
-
 """
 базовый класс детоктора будет лежать в файле BaseDetector.py в одной папке с вашим детектором
 ваш детектор должен наследоваться от этого класса
@@ -19,7 +17,7 @@ class Detector:
         update self.prediction
         return self.prediction
         """
-        detectors["exampleDetector"] # получить актуальный предикт модели из списка зависимостей.
+        # detectors["exampleDetector"] # получить актуальный предикт модели из списка зависимостей.
         # Гарантируется что зависимая модель уже обработала данный frame
         ...
 

@@ -1,4 +1,4 @@
-from BaseDetector import Detector
+from app.detector.BaseDetector import Detector
 from ultralytics import YOLO
 import cv2
 import numpy as np

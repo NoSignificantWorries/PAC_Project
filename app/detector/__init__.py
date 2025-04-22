@@ -1,8 +1,4 @@
-from exampleDetector import exampleDetector
-from TrafficLightViolation import TrafficLightViolation
-from exampleDetector2 import exampleDetector2
-from exampleDetector3 import exampleDetector3
-from exampleDetector4 import exampleDetector4
+from app.detector.TrafficLightViolation import TrafficLightViolation
 
 # пример иерархии моделей
 detectors = {
