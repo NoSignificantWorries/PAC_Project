@@ -1,4 +1,5 @@
 from exampleDetector import exampleDetector
+from TrafficLightViolation import TrafficLightViolation
 from exampleDetector2 import exampleDetector2
 from exampleDetector3 import exampleDetector3
 from exampleDetector4 import exampleDetector4
@@ -19,6 +20,9 @@ detectors = {
     "exampleDetector4": {
         "detector": exampleDetector4
     },
+    "TLV": {
+        "detector": TrafficLightViolation,
+    }
 }
 
 __all__ = ["detectors"]
