@@ -1,7 +1,7 @@
-from parser import ArgParser
-from video import Video
+from app.parser import ArgParser
+from app.video import Video
 import numpy as np
-from pipeline import Pipeline
+from app.pipeline import Pipeline
 
 from lgbt import lgbt
 

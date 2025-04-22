@@ -19,7 +19,7 @@ class ArgParser:
     def parse_args(self) -> dict:
         video_path = self.args.input
         output_path = self.args.output
-        models = self.args.models
+        models = self.args.detectors
 
         if video_path is None:
             raise "Missing input path."
