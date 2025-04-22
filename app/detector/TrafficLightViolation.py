@@ -1,6 +1,5 @@
 from BaseDetector import Detector
 from ultralytics import YOLO
-from app.detector import detectors
 import cv2
 import numpy as np
 
@@ -35,25 +34,21 @@ class TrafficLightViolation(Detector):
         self.car_detector = CarDetector(model_path="weights/yolov8n_car.pt", conf_threshold=0.3)
         pass
 
-    def predict(self, frame):
+    def predict(self, frame, light_color, stop_line_mask):
         """
         Checks if the car violated the rules by running a red traffic light.
 
-        :param frame: Frame (BGR, np.ndarray)
+        :param frame: Frame (BGR, np.ndarray), light_color, stop_line_mask
         :return: True if violation, False if not
         """
 
-        light_color = detectors["exampleDetector"]
-        stop_line_mask = detectors["IntersectMarking"]
-        
-
         if light_color == "green":
-            detectors["TrafficLightViolation"] = False
+            return False
 
         car_boxes = self.car_detector.detect(frame)
 
         if not car_boxes:
-            detectors["TrafficLightViolation"] = False
+            return False
         
         stop_line = cv2.imread(stop_line_mask, cv2.IMREAD_GRAYSCALE)
         _, stop_line_bin = cv2.threshold(stop_line, 1, 255, cv2.THRESH_BINARY)
@@ -66,9 +61,9 @@ class TrafficLightViolation(Detector):
             
             intersection = cv2.bitwise_and(car_mask, stop_line_bin[y1:y2, x1:x2])  
             if np.sum(intersection) > 0: 
-                detectors["TrafficLightViolation"] = True
+                return True
         
-        detectors["TrafficLightViolation"] = False
+        return False
 
             
 
