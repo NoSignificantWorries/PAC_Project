@@ -48,7 +48,7 @@ class Pipeline:
             for dep in dependencies:
                 add_model(dep)  # Рекурсивное добавление зависимостей
 
-            self.pipeline.append(model_info["detector"]())
+            self.pipeline.append((model_info["id"], model_info["depend"], model_info["detector"]()))
             added.add(model_name)
 
         for model in models:

@@ -47,10 +47,17 @@ class Video:
     def __len__(self):
         return self.frame_count
     
-    def __getitem__(self, index):
-        if index < 0 or index >= self.buffer_size:
-            raise IndexError(f"Index out of range: {index}")
-        return self.frame_buffer[index]
+    def __getitem__(self, index_a, index_b=-1):
+        if index_a < 0 or index_a >= self.buffer_size:
+            raise IndexError(f"Index out of range: {index_a}")
+        if index_b > self.buffer_size or index_b <= index_a:
+            raise IndexError(f"Index out of range: {index_b}")
+        if index_b > 0:
+            return self.frame_buffer[index_a:index_b]
+        return self.frame_buffer[index_a]
+    
+    def put_prediction(self, index, prediction):
+        self.frame_buffer[0][index] = prediction
     
     def clear_buffer(self):
         self.frame_buffer[:, :] = None
