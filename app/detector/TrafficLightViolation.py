@@ -31,7 +31,8 @@ class CarDetector:
 
 class TrafficLightViolation(Detector):
     def __init__(self):
-        self.car_detector = CarDetector(model_path="models/yolov8n_car.pt", conf_threshold=0.3)
+        self.car_detector = CarDetector(model_path="weights/yolov8n_car.pt", conf_threshold=0.3)
+        pass
 
     def predict(self, frame, light_color, stop_line_mask):
         """

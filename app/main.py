@@ -1,5 +1,6 @@
 from parser import ArgParser
 from video import Video
+import numpy as np
 from pipeline import Pipeline
 
 from lgbt import lgbt
@@ -10,11 +11,11 @@ def main(kwargs: dict):
 
     pipeline = Pipeline(kwargs["models"])
 
-    for frame in lgbt(video, desc="Processing frames"):
-        for model in pipeline:
-            model.predict(frame)
+    for cluster in lgbt(video, desc="Processing frames"):
+        for mid, dep, model in pipeline:
+            model.predict(cluster[0], *cluster[np.array(dep)])
 
-        mask =  pipeline.apply_masks(frame)
+        mask = pipeline.apply_masks(cluster[0])
         video.write(mask)
 
 
