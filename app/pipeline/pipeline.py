@@ -46,7 +46,7 @@ class Pipeline:
             dependencies = model_info.get("depend", [])
 
             for dep in dependencies:
-                add_model(dep)  # Рекурсивное добавление зависимостей
+                add_model(dep)
 
             self.pipeline.append((model_info["id"], model_info["depend"], model_info["detector"]()))
             added.add(model_name)
@@ -60,6 +60,6 @@ class Pipeline:
         :return: masked frame
         """
         for model in self.pipeline:
-            model.apply_mask(frame)
+            model[2].apply_mask(frame)
 
         return frame

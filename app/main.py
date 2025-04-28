@@ -11,11 +11,20 @@ def main(kwargs: dict):
 
     pipeline = Pipeline(kwargs["models"])
 
-    for cluster in lgbt(video, desc="Processing frames"):
-        for mid, dep, model in pipeline:
-            model.predict(cluster[0], *cluster[np.array(dep)])
+    buffer_size = 250
+    cluster_size = 5
+    frame_buffer = np.array([[None] * cluster_size] * buffer_size, dtype=object)
 
-        mask = pipeline.apply_masks(cluster[0])
+    for frame in lgbt(video, desc="Processing frames"):
+        frame_buffer[1:] = frame_buffer[:-1]
+        frame_buffer[0][0] = frame
+
+        for mid, dep, model in pipeline:
+            print(model)
+            # model.predict(frame_buffer[0][0], *tuple(frame_buffer[0][np.array(dep, dtype=np.int32)]))
+            model.predict(frame_buffer[0][0], None, None)
+
+        mask = pipeline.apply_masks(frame_buffer[0][0])
         video.write(mask)
 
 
