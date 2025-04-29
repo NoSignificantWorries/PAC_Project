@@ -20,8 +20,7 @@ def main(kwargs: dict):
         frame_buffer[0][0] = frame
 
         for mid, dep, model in pipeline:
-            print(model)
-            model.predict(frame_buffer[0][0], "green", np.zeros_like(frame_buffer[0][0]))
+            frame_buffer[0][mid] = model.predict(frame_buffer[0][0], "green", np.zeros_like(frame_buffer[0][0]))
 
         mask = pipeline.apply_masks(frame_buffer[0][0])
         video.write(mask)
