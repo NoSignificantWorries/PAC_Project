@@ -2,10 +2,10 @@ from app.detector.BaseDetector import Detector
 from ultralytics import YOLO
 import cv2
 import numpy as np
+import torch
 
 class CarDetector:
     def __init__(self, model_path, conf_threshold=0.3):
-
         self.model = YOLO(model_path)
         self.conf_threshold = conf_threshold   
     def detect(self, frame):

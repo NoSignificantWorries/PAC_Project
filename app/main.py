@@ -1,3 +1,5 @@
+import time
+
 from app.parser import ArgParser
 from app.video import Video
 import numpy as np
@@ -12,11 +14,12 @@ def main(kwargs: dict):
     stop_line = cv2.imread("app/detector/data/masks/stop_line_1.1.png", cv2.IMREAD_GRAYSCALE)
 
     pipeline = Pipeline(kwargs["models"])
-
+    
     buffer_size = 250
     cluster_size = 5
     frame_buffer = np.array([[None] * cluster_size] * buffer_size, dtype=object)
 
+    tmp = 0
     for frame in lgbt(video, desc="Processing frames"):
         frame_buffer[1:] = frame_buffer[:-1]
         frame_buffer[0][0] = frame
@@ -29,6 +32,12 @@ def main(kwargs: dict):
 
         mask = pipeline.apply_masks(frame_buffer[0][0])
         video.write(mask)
+        
+        tmp += 1
+
+        if tmp > 60:        
+            break
+        time.sleep(0.5)
 
 
 if __name__ == "__main__":
