@@ -50,8 +50,7 @@ class TrafficLightViolation(Detector):
         if not car_boxes:
             return False
         
-        stop_line = cv2.imread(stop_line_mask, cv2.IMREAD_GRAYSCALE)
-        _, stop_line_bin = cv2.threshold(stop_line, 1, 255, cv2.THRESH_BINARY)
+        _, stop_line_bin = cv2.threshold(stop_line_mask, 1, 255, cv2.THRESH_BINARY)
         
         for (x1, y1, x2, y2) in car_boxes:
             
