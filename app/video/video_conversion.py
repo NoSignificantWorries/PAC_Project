@@ -17,10 +17,6 @@ class Video:
         if not self.cap.isOpened():
             raise ValueError(f"Cannot open video file: {path_in}")
 
-        self.buffer_size = 250
-        self.clustre_size = 5
-        self.frame_buffer = np.array([[None] * self.clustre_size] * self.buffer_size, dtype=object)
-
         self.fourcc = cv2.VideoWriter_fourcc(*'XVID')
         self.fps = int(self.cap.get(cv2.CAP_PROP_FPS))
         self.width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -40,21 +36,11 @@ class Video:
             self.close()
             raise StopIteration
 
-        self.frame_buffer[1:] = self.frame_buffer[:-1]
-        self.frame_buffer[0][0] = frame
         return frame
 
     def __len__(self):
         return self.frame_count
     
-    def __getitem__(self, index):
-        if index < 0 or index >= self.buffer_size:
-            raise IndexError(f"Index out of range: {index}")
-        return self.frame_buffer[index]
-    
-    def clear_buffer(self):
-        self.frame_buffer[:, :] = None
-
     def write(self, frame):
         self.out.write(frame)
 
