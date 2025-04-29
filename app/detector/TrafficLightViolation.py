@@ -38,7 +38,7 @@ class TrafficLightViolation(Detector):
         """
         Checks if the car violated the rules by running a red traffic light.
 
-        :param frame: Frame (BGR, np.ndarray), light_color, stop_line_mask
+        :param frame: Frame (BGR, np.ndarray), light_color (string), stop_line_mask ()
         :return: True if violation, False if not
         """
 
