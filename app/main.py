@@ -21,8 +21,7 @@ def main(kwargs: dict):
 
         for mid, dep, model in pipeline:
             print(model)
-            # model.predict(frame_buffer[0][0], *tuple(frame_buffer[0][np.array(dep, dtype=np.int32)]))
-            model.predict(frame_buffer[0][0], None, None)
+            model.predict(frame_buffer[0][0], "green", np.zeros_like(frame_buffer[0][0]))
 
         mask = pipeline.apply_masks(frame_buffer[0][0])
         video.write(mask)
