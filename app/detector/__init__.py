@@ -1,11 +1,17 @@
 from app.detector.TrafficLightViolation import TrafficLightViolation
+from app.detector.TrafficLightDetection import TrafficLightDetection
 
 # пример иерархии моделей
 detectors = {
-    "TLV": {
+    "TLD": {
         "id": 1,
-        "detector": TrafficLightViolation,
+        "detector": TrafficLightDetection,
         "depend": []
+    },
+    "TLV": {
+        "id": 3,
+        "detector": TrafficLightViolation,
+        "depend": [1]
     },
 }
 

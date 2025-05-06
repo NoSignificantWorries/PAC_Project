@@ -19,7 +19,6 @@ def main(kwargs: dict):
     cluster_size = 5
     frame_buffer = np.array([[None] * cluster_size] * buffer_size, dtype=object)
 
-    tmp = 0
     for frame in lgbt(video, desc="Processing frames"):
         frame_buffer[1:] = frame_buffer[:-1]
         frame_buffer[0][0] = frame
@@ -27,17 +26,13 @@ def main(kwargs: dict):
         for mid, dep, model in pipeline:
             # frame_buffer[0][mid] = model.predict(frame_buffer[0][0], "green", np.zeros_like(frame_buffer[0][0]))
             # frame_buffer[0][mid] = model.predict(frame_buffer[0][0], *tuple(frame_buffer[0][np.array(dep, dtype=np.int32)]))
-            frame_buffer[0][mid] = model.predict(frame_buffer[0][0], "green", stop_line)
-            print(frame_buffer[0][mid])
+            if mid == 3:
+                frame_buffer[0][mid] = model.predict(frame_buffer[0][0], *tuple(frame_buffer[0][np.array(dep, dtype=np.int32)]), stop_line)
+            else:
+                frame_buffer[0][mid] = model.predict(frame_buffer[0][0])
 
         mask = pipeline.apply_masks(frame_buffer[0][0])
         video.write(mask)
-        
-        tmp += 1
-
-        if tmp > 60:        
-            break
-        time.sleep(0.5)
 
 
 if __name__ == "__main__":

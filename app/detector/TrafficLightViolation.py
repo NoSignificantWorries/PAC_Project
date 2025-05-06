@@ -42,7 +42,7 @@ class TrafficLightViolation(Detector):
         :return: True if violation, False if not
         """
 
-        if light_color == "green":
+        if light_color == "green" or light_color is None:
             return False
 
         car_boxes = self.car_detector.detect(frame)

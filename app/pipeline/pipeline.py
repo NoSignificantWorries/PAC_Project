@@ -46,7 +46,10 @@ class Pipeline:
             dependencies = model_info.get("depend", [])
 
             for dep in dependencies:
-                add_model(dep)
+                for mdl in detectors:
+                    if detectors[mdl]["id"] == dep:
+                        add_model(mdl)
+                        break
 
             self.pipeline.append((model_info["id"], model_info["depend"], model_info["detector"]()))
             added.add(model_name)
