@@ -37,7 +37,7 @@ def main(kwargs: dict):
         
         tmp += 1
 
-        time.sleep(0.5)
+        # time.sleep(0.5)
 
 
 if __name__ == "__main__":
