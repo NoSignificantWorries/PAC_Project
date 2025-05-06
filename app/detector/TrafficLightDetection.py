@@ -12,7 +12,7 @@ class TrafficLightDetection(Detector):
         self.isred = False
         self.isyellow = False
         self.isinvisible = False
-
+        self.boxes = None
 
 
     def predict(self, frame) -> str:
@@ -51,12 +51,20 @@ class TrafficLightDetection(Detector):
         else:
             self.isyellow = 0
         
+        self.boxes = boxes
+        
         return pred_color
-def apply_mask(self, frame, boxes):
+    
+
+def apply_mask(self, frame):
+    """
+    Draws rectangles on image
+    if there are no boxes do nothing
+    """
 
     image = frame
     
-    for rects in np.array(boxes.xyxy):
+    for rects in np.array(self.boxes.xyxy):
         left_top = (round(rects[0]), round(rects[1]))
         right_low = (round(rects[2]), round(rects[3]))
         cv2.rectangle(image, left_top, right_low, (255, 0, 0), 5)
