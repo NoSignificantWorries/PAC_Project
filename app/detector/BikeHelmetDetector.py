@@ -10,16 +10,17 @@ class BikeHelmetDetector(Detector):
         super().__init__(device="cuda")
 
         # Модель для детекции велосипедистов
-        self.bike_detector = YOLO("weights/bike_detector.pt")
+        self.bike_detector = YOLO("app/detector/weights/bike_detector.pt")
 
         # Модель классификатора касок
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.classifier = YOLO("weights/helmet_classifier.pt")
+        self.classifier = YOLO("app/detector/weights/helmet_classifier.pt")
         self.classifier.to(self.device)
+        self.mask = None
         
         self.transform = transforms.Compose([
             transforms.ToPILImage(),
-            transforms.Resize((224, 224)),  # размер под классификатор
+            transforms.Resize((224, 224)),
             transforms.ToTensor(),
         ])
 
@@ -68,19 +69,23 @@ class BikeHelmetDetector(Detector):
                     "bbox": [x1, y1, x2, y2],
                     "helmet_status": helmet_status
                 })
+        
+        self.mask = bikes
 
         return bikes
 
 
 
-    def apply_mask(self, frame, bikes):
+    def apply_mask(self, frame):
         """
         Метод для визуализации:
         - Рисует рамки вокруг велосипедистов
         - Разные цвета для "с каской" и "без каски"
         """
+        if self.mask is None:
+            raise RuntimeError("Mask not available. Call 'predict' method first.")
 
-        for bike in bikes:
+        for bike in self.mask:
             x1, y1, x2, y2 = bike["bbox"]
             helmet_status = bike["helmet_status"]
 
