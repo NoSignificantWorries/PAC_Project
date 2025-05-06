@@ -1,5 +1,7 @@
 from app.detector.BaseDetector import Detector
 from ultralytics import YOLO
+import cv2
+import numpy as np
 
 class TrafficLightDetection(Detector):
     def __init__(self, confidence=0.7):
@@ -50,4 +52,12 @@ class TrafficLightDetection(Detector):
             self.isyellow = 0
         
         return pred_color
+def apply_mask(self, frame, boxes):
+
+    image = frame
+    
+    for rects in np.array(boxes.xyxy):
+        left_top = (round(rects[0]), round(rects[1]))
+        right_low = (round(rects[2]), round(rects[3]))
+        cv2.rectangle(image, left_top, right_low, (255, 0, 0), 5)
         
