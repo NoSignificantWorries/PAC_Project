@@ -1,4 +1,4 @@
-from BaseDetector import Detector
+from app.detector.BaseDetector import Detector
 
 
 class exampleDetector(Detector):

@@ -1,24 +1,18 @@
-from exampleDetector import exampleDetector
-from exampleDetector2 import exampleDetector2
-from exampleDetector3 import exampleDetector3
-from exampleDetector4 import exampleDetector4
+from app.detector.TrafficLightViolation import TrafficLightViolation
+from app.detector.BikeHelmetDetector import BikeHelmetDetector
 
 # пример иерархии моделей
 detectors = {
-    "exampleDetector": {
-        "detector": exampleDetector,
-        "depend": [exampleDetector2, exampleDetector3]
+    "TLV": {
+        "id": 1,
+        "detector": TrafficLightViolation,
+        "depend": []
     },
-    "exampleDetector2": {
-        "detector": exampleDetector2,
-        "depend": exampleDetector4
-    },
-    "exampleDetector3": {
-        "detector": exampleDetector3
-    },
-    "exampleDetector4": {
-        "detector": exampleDetector4
-    },
+    "BHD": {
+        "id": 2,
+        "detector": BikeHelmetDetector,
+        "depend": []
+    }
 }
 
 __all__ = ["detectors"]

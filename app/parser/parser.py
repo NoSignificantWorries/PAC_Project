@@ -11,15 +11,15 @@ class ArgParser:
         parser_obj = argparse.ArgumentParser()
 
         parser_obj.add_argument("-i", "--input", help="Path to your video")
-        parser_obj.add_argument("-o", "--output", help="Path to output log")
-        parser_obj.add_argument("-m", "--models", help="Models to predict")
+        parser_obj.add_argument("-o", "--output", help="Path to output video")
+        parser_obj.add_argument("-d", "--detectors", help="Detectors names")
 
         self.args = parser_obj.parse_args()
         
     def parse_args(self) -> dict:
         video_path = self.args.input
         output_path = self.args.output
-        models = self.args.models
+        models = self.args.detectors
 
         if video_path is None:
             raise "Missing input path."

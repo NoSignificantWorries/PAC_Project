@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 
 class Video:
@@ -12,6 +13,7 @@ class Video:
         self.path_in = path_in
         self.path_out = path_out
         self.cap = cv2.VideoCapture(path_in)
+
         if not self.cap.isOpened():
             raise ValueError(f"Cannot open video file: {path_in}")
 
@@ -38,7 +40,7 @@ class Video:
 
     def __len__(self):
         return self.frame_count
-
+    
     def write(self, frame):
         self.out.write(frame)
 
